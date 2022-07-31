@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "ACAA,AAEQ,YAFI,CACR,GAAG,CACC,eAAe,CAAA;EACX,SAAS,EAAE,CAAC;EACZ,OAAO,EAAE,OAAO;EAChB,MAAM,EAAE,IAAI;EACZ,OAAO,EAAE,IAAI;EACb,gBAAgB,EAAE,WAAW;CAChC;;ADNT,AAAA,CAAC,CAAC;EACD,MAAM,EAAE,CAAC;EACT,OAAO,EAAE,CAAC;EACV,UAAU,EAAE,UAAU;CACtB;;AAED,AAAA,IAAI,CAAA;EACH,MAAM,EAAE,IAAI;CACZ",
+    "sources": [
+        "main.scss",
+        "components/_createNote.scss"
+    ],
+    "names": [],
+    "file": "main.css"
+}
