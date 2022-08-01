@@ -58,6 +58,9 @@
 						button {
 							font-size: .875rem;
 							padding: .675rem;
+							&:hover{
+								background-color: black;
+							}
 						}
 					}
 				}

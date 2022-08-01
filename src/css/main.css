@@ -94,6 +94,10 @@
   padding: .675rem;
 }
 
+#root .App .left-notes nav .views-nav .add-category button:hover {
+  background-color: black;
+}
+
 #root .App .rigth-notes {
   height: 100%;
   width: 100%;
