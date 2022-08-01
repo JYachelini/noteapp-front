@@ -16,11 +16,11 @@ function ListNotes() {
 			<div ref={topRef} className='flex flex-col overflow-y-auto h-[80%] border-b border-[#dfe1e4]'>
 				{filter.length
 					? filter.map((note: DatabaseNoteInterface, index: number) => {
-							return <Note key={index} title={note.title} content={note.content} _id={note._id} archived={note.archived}></Note>
+							return <Note key={index} title={note.title} content={note.content} _id={note._id}></Note>
 					  })
 					: notes.map((note: DatabaseNoteInterface, index: number) => {
 							if (note.archived === archivedNotes) {
-								return <Note key={index} title={note.title} content={note.content} _id={note._id} archived={note.archived} />
+								return <Note key={index} title={note.title} content={note.content} _id={note._id} />
 							}
 					  })}
 			</div>

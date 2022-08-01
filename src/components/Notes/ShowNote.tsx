@@ -14,7 +14,7 @@ const ShowNote: React.FC = () => {
 	useEffect(() => {
 		setTitle(noteToEdit.title)
 		setContent(noteToEdit.content)
-		setCategories(noteToEdit.category)
+		setCategories(noteToEdit.category!)
 		setError('')
 	}, [noteToEdit])
 
