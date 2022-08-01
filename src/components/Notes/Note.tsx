@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import { NoteInterface } from '../../interfaces/NoteInterface'
+import { DatabaseNoteInterface } from '../../interfaces/NoteInterface'
 import { ModalContext } from '../Context/ModalContext'
 
-const Note = ({ title, content, _id }: NoteInterface) => {
+const Note = ({ title, content, _id }: DatabaseNoteInterface) => {
 	const { handleModalEdit,handleCreateFalse } = useContext(ModalContext)
 	return (
 		<article id={_id} className='flex justify-between w-full h-[9rem] p-3 hover:bg-slate-100 transition-colors border-y'>

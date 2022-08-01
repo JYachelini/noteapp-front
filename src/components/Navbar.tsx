@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { MutableRefObject, useContext, useEffect, useRef, useState } from 'react'
 import { NoteContext } from './Context/NotesContext'
 
 function Navbar() {
@@ -6,21 +6,22 @@ function Navbar() {
 
 	const [categories, setCategories] = useState<string[]>([])
 	const [newCat, setNewCat] = useState<string>('')
-	const [error, setError] = useState<string>('')
 
-	const input: any = useRef()
+	const input: MutableRefObject<HTMLInputElement | null> = useRef(null)
+
+	useEffect(() => {
+		input.current!.value = ''
+	}, [categories])
 
 	const handleKewDown = (e: any) => {
 		if (e.key !== 'Enter') return
 		const value: string = e.target.value
 		if (!value.trim()) return
 		setCategories([...categories, value])
-		e.target.value = ''
 	}
 
 	const handleNewCat = () => {
 		setCategories([...categories, newCat])
-		input.current.value = ''
 	}
 
 	const remove = (index: number) => {
@@ -58,11 +59,11 @@ function Navbar() {
 				</button>
 				<div className='search-by-category'>
 					<span className='font-medium'>Search by category</span>
-					<div className='search-by-category_box border border-[#dfe1e4]'>
-						<input onKeyDown={handleKewDown} onChange={(e) => setNewCat(e.target.value)} ref={input} type='text' className='input-category' placeholder='Type...' />
+					<div className='search-by-category_box border border-[#dfe1e4] bg-slate-100'>
+						<input onKeyDown={handleKewDown} onChange={(e) => setNewCat(e.target.value)} ref={input} type='text' className='input-category bg-slate-100' placeholder='Type...' />
 					</div>
 					<div className='add-category flex justify-center'>
-						<button className='text-sm font-medium transition-colors rounded-md hover:bg-white' onClick={handleNewCat}>
+						<button className='text-sm font-medium transition-colors rounded-md hover:bg-black hover:text-white' onClick={handleNewCat}>
 							Add
 						</button>
 					</div>
@@ -70,7 +71,7 @@ function Navbar() {
 						? categories.map((category, index) => (
 								<div
 									key={index}
-									className='categories bg-slate-200 cursor-pointer hover:bg-black hover:text-white transition-colors '
+									className='categories bg-slate-100 cursor-pointer hover:bg-black hover:text-white transition-colors '
 									onClick={() => {
 										remove(index)
 									}}

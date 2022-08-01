@@ -63,7 +63,7 @@ const ShowNote: React.FC = () => {
 											</div>
 									  ))
 									: null}
-								<input onKeyDown={handleKewDown} type='text' className='input-category h-min' placeholder='Add a category' />
+								<input onKeyDown={handleKewDown} type='text' className='input-category h-min bg-transparent' placeholder='Add a category' />
 							</div>
 						</div>
 						<div className='flex mt-auto mb-auto justify-around relative'>
