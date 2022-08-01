@@ -4,8 +4,7 @@ import { searchNote } from '../Functions/NoteFunctions'
 import { NoteContext } from './NotesContext'
 
 interface ModalContext {
-	isModalCreateVisible: boolean
-	handleModalCreate: () => void
+	isNoteCreate: boolean
 	handleCreate: () => void
 	handleCreateFalse: () => void
 
@@ -44,16 +43,13 @@ export const ModalProvider = ({ children }: any) => {
 	// Modals
 
 	// Creating note
-	const [isModalCreateVisible, setIsModalCreateVisible] = useState(false)
+	const [isNoteCreate, setisNoteCreate] = useState(false)
 
-	const handleModalCreate = () => {
-		setIsModalCreateVisible(!isModalCreateVisible)
-	}
 	const handleCreate = () => {
-		setIsModalCreateVisible(true)
+		setisNoteCreate(true)
 	}
 	const handleCreateFalse = () => {
-		setIsModalCreateVisible(false)
+		setisNoteCreate(false)
 	}
 
 	// Editing note
@@ -103,8 +99,7 @@ export const ModalProvider = ({ children }: any) => {
 	return (
 		<ModalContext.Provider
 			value={{
-				isModalCreateVisible,
-				handleModalCreate,
+				isNoteCreate,
 				handleCreate,
 				handleCreateFalse,
 				isModalEditVisible,

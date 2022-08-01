@@ -12,7 +12,7 @@ function Header() {
 				<h1 className='text-2xl p-1 font-bold'>{archivedNotes ? 'My archived notes' : 'My active notes'}</h1>
 			</div>
 			<div className='flex gap-4 '>
-				<button className='mt-auto p-2 rounded-md hover:bg-white transition-colors' onClick={()=>{
+				<button className='mt-auto p-2 rounded-md hover:bg-slate-200 transition-colors' onClick={()=>{
 					handleCreate()
 					setNoteToEdit(INITIAL_STATE)
 				}}>

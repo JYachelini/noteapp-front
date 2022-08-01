@@ -1,21 +1,14 @@
-import { useContext } from 'react'
 import { ModalProvider } from './components/Context/ModalContext'
 import { NoteProvider } from './components/Context/NotesContext'
-import { UserContext, UserProvider } from './components/Context/UserContext'
-import ListNotes from './components/ListNotes'
-import ModalAdvancedSearch from './components/Modals/ModalAdvancedSearch'
+import ListNotes from './components/Notes/ListNotes'
 import ModalArchiveNote from './components/Modals/ModalArchiveNote'
-import ModalCreateNote from './components/Modals/ModalCreateNote'
 import ModalDeleteNote from './components/Modals/ModalDeleteNote'
-import ShowNote from './components/ShowNote'
-import { ModalLogin } from './components/Modals/ModalLogin'
+import ShowNote from './components/Notes/ShowNote'
 import Header from './components/Header'
 import Navbar from './components/Navbar'
 
 function App() {
-	// const { username } = useContext(UserContext)
 	return (
-		// <UserProvider>
 		<NoteProvider>
 			<ModalProvider>
 				<div className='App bg-white'>
@@ -29,14 +22,11 @@ function App() {
 					<div className='rigth-notes'>
 						<ShowNote />
 					</div>
-					{/* <ModalCreateNote /> */}
-					<ModalLogin />
 					<ModalArchiveNote />
 					<ModalDeleteNote />
 				</div>
 			</ModalProvider>
 		</NoteProvider>
-		// </UserProvider>
 	)
 }
 
