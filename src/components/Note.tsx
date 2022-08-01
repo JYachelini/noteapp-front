@@ -5,7 +5,7 @@ import { ModalContext } from './Context/ModalContext'
 const Note = ({ title, content, _id }: NoteInterface) => {
 	const { handleModalEdit,handleCreateFalse } = useContext(ModalContext)
 	return (
-		<article id={_id} className='flex justify-between w-full min-h-[9rem] p-3 hover:bg-slate-100 transition-colors border-y'>
+		<article id={_id} className='flex justify-between w-full h-[9rem] p-3 hover:bg-slate-100 transition-colors border-y'>
 			<div
 				className='w-full overflow-hidden cursor-pointer'
 				onClick={() => {

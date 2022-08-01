@@ -4,7 +4,7 @@ import { DatabaseNoteInterface } from '../../interfaces/NoteInterface'
 import { setNotesType } from '../../types/Types'
 
 export const fetchNotes = (setNotes: setNotesType, archivedNotes: boolean) => {
-	axios.get('https://ensolvers-noteapp.herokuapp.com/notes', { withCredentials: true }).then((res: AxiosResponse) => {
+	axios.get('http://localhost:8080/notes', { withCredentials: true }).then((res: AxiosResponse) => {
 		const filteredNotes: DatabaseNoteInterface[] = []
 		res.data.forEach((note: DatabaseNoteInterface) => {
 			const noteInformation = {
@@ -24,7 +24,7 @@ export const AddNote = (title: string, content: string, category: string[], setN
 	try {
 		return new Promise((resolve, reject) => {
 			if (title && content) {
-				axios.post(`https://ensolvers-noteapp.herokuapp.com/notes`, { note: { title, content, category } }, { withCredentials: true }).then((result) => {
+				axios.post(`http://localhost:8080/notes`, { note: { title, content, category } }, { withCredentials: true }).then((result) => {
 					if (!archivedNotes) {
 						setNotes([result.data, ...notes])
 						resolve(true)
@@ -49,7 +49,7 @@ export const EditNote = (title: string, content: string, category: string[], _id
 					archived,
 				}
 				axios
-					.post('https://ensolvers-noteapp.herokuapp.com/notes/edit', { _id, newValues }, { withCredentials: true })
+					.post('http://localhost:8080/notes/edit', { _id, newValues }, { withCredentials: true })
 					.then(() => {
 						setNotes((notes) => notes.map((note) => (note._id === _id ? newValues : note)))
 					})
@@ -66,7 +66,7 @@ export const DeleteNote = (_id: string, setNotes: setNotesType) => {
 		return new Promise((resolve, reject) => {
 			if (_id) {
 				axios
-					.post('https://ensolvers-noteapp.herokuapp.com/notes/delete', { _id }, { withCredentials: true })
+					.post('http://localhost:8080/notes/delete', { _id }, { withCredentials: true })
 					.then(() => {
 						setNotes((notes) => notes.filter((note) => note._id !== _id))
 					})
@@ -84,7 +84,7 @@ export const ArchiveNote = (_id: string, setNotes: setNotesType, archived: boole
 			console.log(_id)
 			if (_id) {
 				axios
-					.post('https://ensolvers-noteapp.herokuapp.com/notes/archive', { _id, archived }, { withCredentials: true })
+					.post('http://localhost:8080/notes/archive', { _id, archived }, { withCredentials: true })
 					.then(() => {
 						setNotes((notes) => notes.filter((note) => note._id !== _id))
 					})
@@ -101,7 +101,7 @@ export const SearchByCategory = (category: string[], handleFilter: (note: Databa
 		return new Promise((resolve, reject) => {
 			if (category.length != 0) {
 				axios
-					.post('https://ensolvers-noteapp.herokuapp.com/notes/category', { category }, { withCredentials: true })
+					.post('http://localhost:8080/notes/category', { category }, { withCredentials: true })
 					.then((result: AxiosResponse) => {
 						const filteredNotes: DatabaseNoteInterface[] = []
 						result.data.forEach((note: DatabaseNoteInterface) => {

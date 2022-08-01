@@ -46,8 +46,7 @@ const ShowNote: React.FC = () => {
 				</span>
 				<div className='create-note rounded-md h-full pt-10'>
 					<form className='flex flex-col gap-3 h-full'>
-						{error}
-						<input className='font-medium text-3xl p-2 px-6 focus-visible:outline-none bg-transparent hover:bg-slate-100 transition-colors' type='text' maxLength={20} value={title} onChange={(e) => setTitle(e.target.value)} />
+						<input className='font-medium text-3xl p-2 px-6 focus-visible:outline-none bg-transparent hover:bg-slate-100 transition-colors' type='text' maxLength={40} value={title} onChange={(e) => setTitle(e.target.value)} />
 						<textarea className='resize-none h-[70%] p-6 hover:bg-slate-100 bg-transparent transition-colors focus-visible:outline-none' name='' id='' value={content} onChange={(e) => setContent(e.target.value)} />
 						<div className='flex gap-3 px-6 h-[10%]'>
 							<span className='text-xl pt-3'>Categories:</span>
@@ -64,22 +63,28 @@ const ShowNote: React.FC = () => {
 								<input onKeyDown={handleKewDown} type='text' className='input-category h-min' placeholder='Add a category' />
 							</div>
 						</div>
+						{error}
 						<div className='flex mt-auto mb-auto justify-around'>
 							{isModalCreateVisible ? (
-								<span onClick={(e)=>{
-									e.preventDefault()
-									addNote(title, content, categories).then(
-										() => {
-											setError('')
-											setTitle('')
-											setContent('')
-											setCategories([])
-										},
-										(res) => {
-											setError(res)
-										}
-									)
-								}} className='rounded-md p-2 cursor-pointer text-center m-auto bg-slate-200 hover:bg-black hover:text-slate-200 transition-colors'>Create note</span>
+								<span
+									onClick={(e) => {
+										e.preventDefault()
+										addNote(title, content, categories).then(
+											() => {
+												setError('')
+												setTitle('')
+												setContent('')
+												setCategories([])
+											},
+											(res) => {
+												setError(res)
+											}
+										)
+									}}
+									className='rounded-md p-2 cursor-pointer text-center m-auto bg-slate-200 hover:bg-black hover:text-slate-200 transition-colors'
+								>
+									Create note
+								</span>
 							) : (
 								<>
 									<span
