@@ -46,7 +46,7 @@ export const NoteProvider = ({ children }: any): JSX.Element => {
 	const removeFilter = (category: string) => {
 		console.log(
 			filter.filter((note) => {
-				note.category.some((cat) => category !== cat)
+				note.category!.some((cat) => category !== cat)
 			})
 		)
 	}
