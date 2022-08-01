@@ -14,15 +14,21 @@ function ListNotes() {
 	return (
 		<>
 			<div ref={topRef} className='flex flex-col overflow-y-auto h-[80%] border-b border-[#dfe1e4]'>
-				{filter.length
-					? filter.map((note: DatabaseNoteInterface, index: number) => {
-							return <Note key={index} title={note.title} content={note.content} _id={note._id}></Note>
-					  })
-					: notes.map((note: DatabaseNoteInterface, index: number) => {
-							if (note.archived === archivedNotes) {
-								return <Note key={index} title={note.title} content={note.content} _id={note._id} />
-							}
-					  })}
+				{notes.length ? (
+					<>
+						{filter.length
+							? filter.map((note: DatabaseNoteInterface, index: number) => {
+									return <Note key={index} title={note.title} content={note.content} _id={note._id}></Note>
+							  })
+							: notes.map((note: DatabaseNoteInterface, index: number) => {
+									if (note.archived === archivedNotes) {
+										return <Note key={index} title={note.title} content={note.content} _id={note._id} />
+									}
+							  })}
+					</>
+				) : (
+					<span className='h-full w-full text-slate-500 flex justify-center items-center'>Empty</span>
+				)}
 			</div>
 		</>
 	)
