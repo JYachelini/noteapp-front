@@ -7,8 +7,9 @@ import ModalAdvancedSearch from './components/Modals/ModalAdvancedSearch'
 import ModalArchiveNote from './components/Modals/ModalArchiveNote'
 import ModalCreateNote from './components/Modals/ModalCreateNote'
 import ModalDeleteNote from './components/Modals/ModalDeleteNote'
-import ModalEditNote from './components/Modals/ModalEditNote'
+import ShowNote from './components/ShowNote'
 import { ModalLogin } from './components/Modals/ModalLogin'
+import Header from './components/Header'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -17,15 +18,21 @@ function App() {
 		// <UserProvider>
 		<NoteProvider>
 			<ModalProvider>
-				<div className='App relative overflow-hidden'>
-					<Navbar />
-					<ListNotes />
+				<div className='App bg-white'>
+					<div className='left-notes overflow-hidden'>
+						<Navbar />
+						<div className='border-r border-[#dfe1e4] w-[65%]'>
+							<Header />
+							<ListNotes />
+						</div>
+					</div>
+					<div className='rigth-notes'>
+						<ShowNote />
+					</div>
+					{/* <ModalCreateNote /> */}
 					<ModalLogin />
-					<ModalEditNote />
 					<ModalArchiveNote />
 					<ModalDeleteNote />
-					<ModalCreateNote />
-					<ModalAdvancedSearch />
 				</div>
 			</ModalProvider>
 		</NoteProvider>

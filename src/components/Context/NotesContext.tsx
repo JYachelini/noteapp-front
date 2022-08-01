@@ -1,19 +1,20 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { DatabaseNoteInterface } from '../../interfaces/NoteInterface'
-import { fetchNotes } from '../fetch/fetchNotes'
+import { fetchNotes } from '../Functions/NoteFunctions'
 import { AddNote, ArchiveNote, DeleteNote, EditNote, SearchByCategory } from '../Functions/NoteFunctions'
 
 interface NoteContext {
 	archivedNotes: boolean
-	notes: DatabaseNoteInterface[]
+	setArchivedNotes: React.Dispatch<React.SetStateAction<boolean>>
+	handleArchived: () => void
 
 	filter: DatabaseNoteInterface[]
 	setFilter: React.Dispatch<React.SetStateAction<DatabaseNoteInterface[]>>
-	removeFilter: (number: number) => void
+	removeFilter: (category: string) => void
 
+	notes: DatabaseNoteInterface[]
 	addNote: (title: string, content: string, category: string[]) => Promise<unknown>
-	editNote: (title: string, content: string, category: string[], _id: string) => Promise<unknown>
-	handleArchived: () => void
+	editNote: (title: string, content: string, category: string[], _id: string, archived: boolean) => Promise<unknown>
 	handleCategory: (setCategories: React.Dispatch<React.SetStateAction<string[]>>, categories: string[], value: string) => void
 	removeCategory: (index: number, setCategories: setCategory, categories: string[]) => void
 	deleteNote: (_id: string) => Promise<unknown>
@@ -28,6 +29,7 @@ export const NoteContext = createContext<NoteContext>({} as NoteContext)
 export const NoteProvider = ({ children }: any): JSX.Element => {
 	// View of archived or unarchived notes
 	const [archivedNotes, setArchivedNotes] = useState<boolean>(false)
+
 	const handleArchived = () => {
 		setArchivedNotes(!archivedNotes)
 	}
@@ -41,8 +43,12 @@ export const NoteProvider = ({ children }: any): JSX.Element => {
 	// Apply filter
 	const [filter, setFilter] = useState<DatabaseNoteInterface[]>([])
 
-	const removeFilter = (index: number) => {
-		setFilter(filter.filter((el, i) => i !== index))
+	const removeFilter = (category: string) => {
+		console.log(
+			filter.filter((note) => {
+				note.category.some((cat) => category !== cat)
+			})
+		)
 	}
 
 	// Note functions
@@ -50,8 +56,8 @@ export const NoteProvider = ({ children }: any): JSX.Element => {
 		return await AddNote(title, content, category, setNotes, notes, archivedNotes)
 	}
 
-	const editNote = async (title: string, content: string, category: string[], _id: string) => {
-		return await EditNote(title, content, category, _id, setNotes)
+	const editNote = async (title: string, content: string, category: string[], _id: string, archived: boolean) => {
+		return await EditNote(title, content, category, _id, archived, setNotes)
 	}
 
 	const handleCategory = (setCategories: setCategory, categories: string[], value: string) => {
@@ -74,5 +80,9 @@ export const NoteProvider = ({ children }: any): JSX.Element => {
 		return await SearchByCategory(category, setFilter)
 	}
 
-	return <NoteContext.Provider value={{ notes, archivedNotes, filter, setFilter, removeFilter, addNote, editNote, handleArchived, handleCategory, removeCategory, deleteNote, archiveNote, searchByCategory }}>{children}</NoteContext.Provider>
+	return (
+		<NoteContext.Provider value={{ notes, archivedNotes, setArchivedNotes, filter, setFilter, removeFilter, addNote, editNote, handleArchived, handleCategory, removeCategory, deleteNote, archiveNote, searchByCategory }}>
+			{children}
+		</NoteContext.Provider>
+	)
 }

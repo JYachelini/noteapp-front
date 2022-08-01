@@ -2,7 +2,6 @@
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
-  padding: .5rem 0;
   border: none;
   outline: none;
   background-color: transparent;
@@ -15,7 +14,112 @@
           box-sizing: border-box;
 }
 
-body {
-  margin: 1rem;
+#root {
+  height: 100vh;
+}
+
+#root .App {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#root .App .left-notes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 50%;
+  height: 100%;
+}
+
+#root .App .left-notes nav .views-nav button {
+  padding: 0 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#root .App .left-notes nav .views-nav button:hover {
+  background-color: white;
+}
+
+#root .App .left-notes nav .views-nav .search-by-category {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.3rem;
+  padding: 0 0.5rem;
+}
+
+#root .App .left-notes nav .views-nav .search-by-category span,
+#root .App .left-notes nav .views-nav .search-by-category input {
+  font-size: 1rem;
+  line-height: 1.25rem;
+}
+
+#root .App .left-notes nav .views-nav .search-by-category .search-by-category_box {
+  border-radius: 0.2rem;
+  background: white;
+  padding: 0.2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+#root .App .left-notes nav .views-nav .search-by-category .search-by-category_box input {
+  background-color: transparent;
+  padding: 0.2rem;
+  max-width: 100%;
+}
+
+#root .App .left-notes nav .views-nav .search-by-category .search-by-category_box input:focus-visible {
+  outline: none;
+}
+
+#root .App .left-notes nav .views-nav .add-category button {
+  font-size: .875rem;
+  padding: .675rem;
+}
+
+#root .App .rigth-notes {
+  height: 100%;
+  width: 100%;
+}
+
+.categories {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  padding: 0.18rem;
+}
+
+.categories .category {
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.input-category {
+  padding: 0.18rem;
 }
 /*# sourceMappingURL=main.css.map */

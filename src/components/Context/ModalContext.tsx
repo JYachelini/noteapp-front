@@ -6,10 +6,13 @@ import { NoteContext } from './NotesContext'
 interface ModalContext {
 	isModalCreateVisible: boolean
 	handleModalCreate: () => void
+	handleCreate: () => void
+	handleCreateFalse: () => void
 
 	isModalEditVisible: boolean
 	handleModalEdit: (_id?: string) => void
 	noteToEdit: DatabaseNoteInterface
+	setNoteToEdit: React.Dispatch<React.SetStateAction<DatabaseNoteInterface>>
 
 	isModalDeleteVisible: boolean
 	handleModalDelete: (e?: any) => void
@@ -46,22 +49,31 @@ export const ModalProvider = ({ children }: any) => {
 	const handleModalCreate = () => {
 		setIsModalCreateVisible(!isModalCreateVisible)
 	}
+	const handleCreate = () => {
+		setIsModalCreateVisible(true)
+	}
+	const handleCreateFalse = () => {
+		setIsModalCreateVisible(false)
+	}
 
 	// Editing note
 	const [isModalEditVisible, setIsModalEditVisible] = useState(false)
 	const [noteToEdit, setNoteToEdit] = useState<DatabaseNoteInterface>(INITIAL_STATE)
 
 	const handleModalEdit = (_id?: string) => {
-		if (_id) searchNote(_id, notes, setNoteToEdit)
-
-		setIsModalEditVisible(!isModalEditVisible)
+		if (_id) {
+			searchNote(_id, notes, setNoteToEdit)
+			setIsModalEditVisible(true)
+		} else {
+			setIsModalEditVisible(false)
+		}
 	}
 
 	// Deleting note
 	const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false)
 	const [noteToDelete, setNoteToDelete] = useState<DatabaseNoteInterface>(INITIAL_STATE)
 
-	const handleModalDelete = (_id:string) => {
+	const handleModalDelete = (_id: string) => {
 		searchNote(_id, notes, setNoteToDelete)
 		setIsModalDeleteVisible(!isModalDeleteVisible)
 	}
@@ -70,7 +82,7 @@ export const ModalProvider = ({ children }: any) => {
 	const [isModalArchiveVisible, setIsModalArchiveVisible] = useState(false)
 	const [noteToArchive, setNoteToArchive] = useState<DatabaseNoteInterface>(INITIAL_STATE)
 
-	const handleModalArchive = (_id:string) => {
+	const handleModalArchive = (_id: string) => {
 		searchNote(_id, notes, setNoteToArchive)
 		setIsModalArchiveVisible(!isModalArchiveVisible)
 	}
@@ -93,9 +105,12 @@ export const ModalProvider = ({ children }: any) => {
 			value={{
 				isModalCreateVisible,
 				handleModalCreate,
+				handleCreate,
+				handleCreateFalse,
 				isModalEditVisible,
 				handleModalEdit,
 				noteToEdit,
+				setNoteToEdit,
 				isModalDeleteVisible,
 				handleModalDelete,
 				noteToDelete,

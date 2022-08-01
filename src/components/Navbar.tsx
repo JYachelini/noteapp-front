@@ -1,34 +1,88 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { NoteContext } from './Context/NotesContext'
-import { ModalContext } from './Context/ModalContext'
 
 function Navbar() {
-	const { archivedNotes, handleArchived } = useContext(NoteContext)
-	const { handleModalCreate, handleModalAdvancedSearch, handleModalLogin } = useContext(ModalContext)
+	const { setArchivedNotes, searchByCategory } = useContext(NoteContext)
 
+	const [categories, setCategories] = useState<string[]>([])
+	const [newCat, setNewCat] = useState<string>('')
+	const [error, setError] = useState<string>('')
+
+	const input: any = useRef()
+
+	const handleKewDown = (e: any) => {
+		if (e.key !== 'Enter') return
+		const value: string = e.target.value
+		if (!value.trim()) return
+		setCategories([...categories, value])
+		e.target.value = ''
+	}
+
+	const handleNewCat = () => {
+		setCategories([...categories, newCat])
+		input.current.value = ''
+	}
+
+	const remove = (index: number) => {
+		setCategories(categories.filter((el, i) => i !== index))
+	}
+
+	useEffect(() => {
+		searchByCategory(categories)
+	}, [categories])
 	return (
-		<header className='relative'>
-			<nav className='flex flex-col items-center gap-10 mb-10'>
-				<div>
-					<h1 className='text-7xl'>{archivedNotes ? 'My archived notes' : 'My active notes'}</h1>
+		<nav className='h-full border-r border-[#dfe1e4] pt-10 bg-slate-200 w-[35%] gap-3 flex flex-col'>
+			<h1 className='px-2 text-xl font-bold p-1'>Views</h1>
+			<div className='views-nav flex flex-col gap-3'>
+				<button
+					className='transition-colors'
+					onClick={() => {
+						setArchivedNotes(false)
+					}}
+				>
+					<span className='font-medium'>Notes</span>
+					<svg xmlns='http://www.w3.org/2000/svg' className='w-6 h-6'>
+						<path d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8l8-8V5a2 2 0 0 0-2-2zm-7 16v-7h7l-7 7z'></path>
+					</svg>
+				</button>
+				<button
+					className='transition-colors'
+					onClick={() => {
+						setArchivedNotes(true)
+					}}
+				>
+					<span className='font-medium'>Archived</span>
+					<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'>
+						<path d='m21.704 5.29-2.997-2.997A.996.996 0 0 0 18 2H6a.996.996 0 0 0-.707.293L2.296 5.29A.994.994 0 0 0 2 5.999V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5.999a.994.994 0 0 0-.296-.709zM6.414 4h11.172l1 1H5.414l1-1zM17 13v1H7v-4h2v2h6v-2h2v3z'></path>
+					</svg>
+				</button>
+				<div className='search-by-category'>
+					<span className='font-medium'>Search by category</span>
+					<div className='search-by-category_box border border-[#dfe1e4]'>
+						{categories
+							? categories.map((category, index) => (
+									<div
+										key={index}
+										className='categories bg-slate-200 cursor-pointer hover:bg-black hover:text-white transition-colors '
+										onClick={() => {
+											remove(index)
+										}}
+									>
+										<span className='category'>{category}</span>
+										<span className='rounded-full  items-center text-center flex justify-center text-sm h-[20px] w-[20px]'>x</span>
+									</div>
+							  ))
+							: null}
+						<input onKeyDown={handleKewDown} onChange={(e) => setNewCat(e.target.value)} ref={input} type='text' className='input-category' placeholder='Type...'  />
+					</div>
+					<div className='add-category flex justify-center'>
+						<button className='text-sm font-medium transition-colors rounded-md hover:bg-white' onClick={handleNewCat}>
+							Add
+						</button>
+					</div>
 				</div>
-				<div className='flex gap-4'>
-					<button className='mt-auto border border-zinc-500 p-2 rounded-md' onClick={handleModalCreate}>
-						Create new note
-					</button>
-					<button className='mt-auto border border-zinc-500 p-2 rounded-md min-w-[8rem]' onClick={handleArchived}>
-						{archivedNotes ? 'Active notes' : 'Archived notes'}
-					</button>
-					<button onClick={handleModalAdvancedSearch} className='mt-auto border border-zinc-500 p-2 rounded-md'>
-						Advanced search
-					</button>
-				</div>
-			</nav>
-			{/* <div className='flex gap-3 absolute top-0 right-0 '>
-				<button onClick={handleModalLogin} className='p-1 border border-slate-700 rounded-md'>Log In</button>
-				<button className='p-1 border border-slate-700 rounded-md'>Register</button>
-			</div> */}
-		</header>
+			</div>
+		</nav>
 	)
 }
 

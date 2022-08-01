@@ -3,13 +3,30 @@ import axios, { AxiosResponse } from 'axios'
 import { DatabaseNoteInterface } from '../../interfaces/NoteInterface'
 import { setNotesType } from '../../types/Types'
 
+export const fetchNotes = (setNotes: setNotesType, archivedNotes: boolean) => {
+	axios.get('https://ensolvers-noteapp.herokuapp.com/notes', { withCredentials: true }).then((res: AxiosResponse) => {
+		const filteredNotes: DatabaseNoteInterface[] = []
+		res.data.forEach((note: DatabaseNoteInterface) => {
+			const noteInformation = {
+				title: note.title,
+				content: note.content,
+				category: note.category,
+				_id: note._id,
+				archived: note.archived,
+			}
+			filteredNotes.push(noteInformation)
+		})
+		setNotes(filteredNotes)
+	})
+}
+
 export const AddNote = (title: string, content: string, category: string[], setNotes: setNotesType, notes: DatabaseNoteInterface[], archivedNotes: boolean) => {
 	try {
 		return new Promise((resolve, reject) => {
 			if (title && content) {
 				axios.post(`https://ensolvers-noteapp.herokuapp.com/notes`, { note: { title, content, category } }, { withCredentials: true }).then((result) => {
 					if (!archivedNotes) {
-						setNotes([...notes, result.data])
+						setNotes([result.data, ...notes])
 						resolve(true)
 					} else resolve(true)
 				})
@@ -20,7 +37,7 @@ export const AddNote = (title: string, content: string, category: string[], setN
 	}
 }
 
-export const EditNote = (title: string, content: string, category: string[], _id: string, setNotes: setNotesType) => {
+export const EditNote = (title: string, content: string, category: string[], _id: string, archived: boolean, setNotes: setNotesType) => {
 	try {
 		return new Promise((resolve, reject) => {
 			if (_id) {
@@ -29,6 +46,7 @@ export const EditNote = (title: string, content: string, category: string[], _id
 					content,
 					category,
 					_id,
+					archived,
 				}
 				axios
 					.post('https://ensolvers-noteapp.herokuapp.com/notes/edit', { _id, newValues }, { withCredentials: true })
@@ -99,7 +117,9 @@ export const SearchByCategory = (category: string[], handleFilter: (note: Databa
 						handleFilter(filteredNotes)
 					})
 					.then(() => resolve(true))
-			} else reject('Need category')
+			} else {
+				handleFilter([])
+			}
 		})
 	} catch (error) {
 		throw error
