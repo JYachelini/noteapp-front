@@ -24,11 +24,9 @@ export const AddNote = (title: string, content: string, category: string[], setN
 	try {
 		return new Promise((resolve, reject) => {
 			if (title && content) {
-				axios.post(`https://ensolvers-noteapp.herokuapp.com/notes`, { note: { title, content, category } }, { withCredentials: true }).then((result) => {
-					if (!archivedNotes) {
-						setNotes([result.data, ...notes])
-						resolve(true)
-					} else resolve(true)
+				axios.post(`https://ensolvers-noteapp.herokuapp.com/notes`, { note: { title, content, category, archived: archivedNotes } }, { withCredentials: true }).then((result) => {
+					setNotes([result.data, ...notes])
+					resolve(true)
 				})
 			} else reject('Title and content are necesary')
 		})
@@ -41,19 +39,21 @@ export const EditNote = (title: string, content: string, category: string[], _id
 	try {
 		return new Promise((resolve, reject) => {
 			if (_id) {
-				const newValues: DatabaseNoteInterface = {
-					title,
-					content,
-					category,
-					_id,
-					archived,
-				}
-				axios
-					.post('https://ensolvers-noteapp.herokuapp.com/notes/edit', { _id, newValues }, { withCredentials: true })
-					.then(() => {
-						setNotes((notes) => notes.map((note) => (note._id === _id ? newValues : note)))
-					})
-					.then(() => resolve(true))
+				if (title && content) {
+					const newValues: DatabaseNoteInterface = {
+						title,
+						content,
+						category,
+						_id,
+						archived,
+					}
+					axios
+						.post('https://ensolvers-noteapp.herokuapp.com/notes/edit', { _id, newValues }, { withCredentials: true })
+						.then(() => {
+							setNotes((notes) => notes.map((note) => (note._id === _id ? newValues : note)))
+						})
+						.then(() => resolve(true))
+				} else reject('Title and content are necesary')
 			} else reject(false)
 		})
 	} catch (error) {

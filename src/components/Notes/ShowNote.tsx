@@ -15,6 +15,7 @@ const ShowNote: React.FC = () => {
 		setTitle(noteToEdit.title)
 		setContent(noteToEdit.content)
 		setCategories(noteToEdit.category)
+		setError('')
 	}, [noteToEdit])
 
 	const handleKewDown = (e: any) => {
@@ -48,8 +49,8 @@ const ShowNote: React.FC = () => {
 				</span>
 				<div className='create-note rounded-md h-full pt-10'>
 					<form className='flex flex-col gap-3 h-full'>
-						<input className='font-medium text-3xl p-2 px-6 focus-visible:outline-none bg-slate-100 hover:bg-slate-200 transition-colors' type='text' maxLength={40} value={title} onChange={(e) => setTitle(e.target.value)} />
-						<textarea className='resize-none h-[70%] p-6 bg-slate-100 hover:bg-slate-200 transition-colors focus-visible:outline-none' name='' id='' value={content} onChange={(e) => setContent(e.target.value)} />
+						<input className='font-medium text-3xl p-2 px-6 focus-visible:outline-none bg-slate-100 hover:bg-slate-200 transition-colors' type='text' maxLength={40} value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title'/>
+						<textarea className='resize-none h-[70%] p-6 bg-slate-100 hover:bg-slate-200 transition-colors focus-visible:outline-none' name='' id='' value={content} onChange={(e) => setContent(e.target.value)} placeholder="What's happening?" />
 						<div className='flex gap-3 px-6 h-[10%]'>
 							<span className='text-xl pt-3'>Categories:</span>
 
@@ -65,8 +66,8 @@ const ShowNote: React.FC = () => {
 								<input onKeyDown={handleKewDown} type='text' className='input-category h-min' placeholder='Add a category' />
 							</div>
 						</div>
-						{error}
-						<div className='flex mt-auto mb-auto justify-around'>
+						<div className='flex mt-auto mb-auto justify-around relative'>
+						{error ? <span className='absolute bottom-12 left-5 text-center pl-6 text-red-500'>{error}!</span>:null}
 							{isNoteCreate ? (
 								<span
 									onClick={(e) => {

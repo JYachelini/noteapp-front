@@ -59,27 +59,27 @@ function Navbar() {
 				<div className='search-by-category'>
 					<span className='font-medium'>Search by category</span>
 					<div className='search-by-category_box border border-[#dfe1e4]'>
-						{categories
-							? categories.map((category, index) => (
-									<div
-										key={index}
-										className='categories bg-slate-200 cursor-pointer hover:bg-black hover:text-white transition-colors '
-										onClick={() => {
-											remove(index)
-										}}
-									>
-										<span className='category'>{category}</span>
-										<span className='rounded-full  items-center text-center flex justify-center text-sm h-[20px] w-[20px]'>x</span>
-									</div>
-							  ))
-							: null}
-						<input onKeyDown={handleKewDown} onChange={(e) => setNewCat(e.target.value)} ref={input} type='text' className='input-category' placeholder='Type...'  />
+						<input onKeyDown={handleKewDown} onChange={(e) => setNewCat(e.target.value)} ref={input} type='text' className='input-category' placeholder='Type...' />
 					</div>
 					<div className='add-category flex justify-center'>
 						<button className='text-sm font-medium transition-colors rounded-md hover:bg-white' onClick={handleNewCat}>
 							Add
 						</button>
 					</div>
+					{categories
+						? categories.map((category, index) => (
+								<div
+									key={index}
+									className='categories bg-slate-200 cursor-pointer hover:bg-black hover:text-white transition-colors '
+									onClick={() => {
+										remove(index)
+									}}
+								>
+									<span className='category'>{category}</span>
+									<span className='rounded-full  items-center text-center flex justify-center text-sm h-[20px] w-[20px]'>x</span>
+								</div>
+						  ))
+						: null}
 				</div>
 			</div>
 		</nav>
